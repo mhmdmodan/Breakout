@@ -6,7 +6,7 @@ import comp124graphics.GraphicsObject;
 import java.awt.*;
 
 /**
- * Created by mhmdm on 3/23/2017.
+ * A class defining
  */
 public class Ball extends Ellipse {
     private double size;
@@ -34,26 +34,48 @@ public class Ball extends Ellipse {
     public void checkCollision() {
         GraphicsObject[] bounceables = new GraphicsObject[4];
 
-        bounceables[0] = game.getElementAt(getX(), getY());
-        bounceables[1] = game.getElementAt(getX(), getY() + size);
-        bounceables[2] = game.getElementAt(getX() + size, getY());
-        bounceables[3] = game.getElementAt(getX() + size, getY() + size);
+        bounceables[0] = game.getDeepElementAt(getX(), getY());
+        bounceables[1] = game.getDeepElementAt(getX(), getY() + size);
+        bounceables[2] = game.getDeepElementAt(getX() + size, getY());
+        bounceables[3] = game.getDeepElementAt(getX() + size, getY() + size);
 
         for (int i = 0; i < bounceables.length; i++) {
             if (bounceables[i] instanceof Bounceable) {
                 Bounceable bounced = (Bounceable) bounceables[i];
-                bounced.collided(game, this);
-                return;
+                bounced.collided(this);
             }
         }
     }
 
-    public void bounce(int[] direction) {
-        currentDX = currentDX*direction[0];
-        currentDY = currentDY*direction[1];
+    public void bounce(Direction direction) {
+        switch (direction) {
+            case RIGHT:
+                currentDX = currentDX < 0 ? -currentDX : currentDX;
+                break;
+            case LEFT:
+                currentDX = currentDX < 0 ? currentDX : -currentDX;
+                break;
+            case BOTTOM:
+                currentDY = currentDY < 0 ? -currentDY : currentDY;
+                break;
+            case TOP:
+                currentDY = currentDY < 0 ? currentDY : -currentDY;
+        }
     }
 
     public void moveBall() {
         move(currentDX, currentDY);
+    }
+
+    public double getRadius() {
+        return size/2;
+    }
+
+    public double getXMid() {
+        return getX() + getRadius();
+    }
+
+    public double getYMid() {
+        return getY() + getRadius();
     }
 }
