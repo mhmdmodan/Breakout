@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
 /**
- * Created by mhmdm on 3/30/2017.
+ * Listener for mouse movements and timer for moving the ball
  */
 public class Listener implements MouseMotionListener, ActionListener {
 
@@ -18,6 +18,10 @@ public class Listener implements MouseMotionListener, ActionListener {
         this.paddle = paddle;
     }
 
+    /**
+     * Moves the ball
+     * @param e - Timer action event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         ball.moveBall();
@@ -28,6 +32,10 @@ public class Listener implements MouseMotionListener, ActionListener {
     public void mouseDragged(MouseEvent e) {
     }
 
+    /**
+     * Set the paddle to the mouse x position
+     * @param e - MouseEvent with mouse position
+     */
     @Override
     public void mouseMoved(MouseEvent e) {
         paddle.setCenterX(e.getX());

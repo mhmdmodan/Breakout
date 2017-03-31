@@ -1,7 +1,7 @@
 package edu.macalester.comp124.breakout;
 
 /**
- * Created by mhmdm on 3/26/2017.
+ * Possible values for direction hit from
  */
 public enum Direction {
     LEFT, RIGHT, TOP, BOTTOM

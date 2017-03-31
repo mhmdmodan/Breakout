@@ -8,10 +8,14 @@ import java.awt.geom.Point2D;
 import static edu.macalester.comp124.breakout.Direction.*;
 
 /**
- * Created by mhmdm on 3/23/2017.
+ * An interface outlining graphics object that can be bounced on
  */
 public interface Bounceable {
 
+    /**
+     * What to do when collided with
+     * @param ball - ball that collided
+     */
     public abstract void collided(Ball ball);
 
     public abstract double getXMid();
@@ -26,12 +30,20 @@ public interface Bounceable {
 
     public abstract double getHeight();
 
+    /**
+     * Determines which side the ball hit a Bounceable from
+     * @param bounceable - bounceable which was hit
+     * @param ball - ball which collided
+     * @return - Direction enum
+     */
     public static Direction collisionDirection(Bounceable bounceable, Ball ball) {
         double xDist = Math.abs(ball.getXMid() - bounceable.getXMid());
         if (bounceable.getWidth() / 2 <= xDist &&
                 xDist <= (bounceable.getWidth() / 2 + ball.getRadius())) {
             if (bounceable.getXMid() < ball.getXMid()) {
-                ball.setPosition(bounceable.getX() + bounceable.getWidth(), ball.getY()); //unclip
+                //these set position terms unclip the ball, so it can never get stuck inside something
+                //and jiggle around an edge
+                ball.setPosition(bounceable.getX() + bounceable.getWidth(), ball.getY());
                 return RIGHT;
             } else {
                 ball.setPosition(bounceable.getX() - ball.getWidth(), ball.getY());
