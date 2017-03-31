@@ -15,12 +15,21 @@ public class Ball extends Ellipse {
     private double currentDY;
     private double angle;
 
+    private boolean alreadyBounced;
+
+    private double[] pointsX;
+    private double[] pointsY;
+
     public Ball(double x, double y, double size, boolean left, double step, BreakoutGame game) {
         super(x, y, size, size);
         this.size = size;
         this.game = game;
         this.setFilled(true);
         this.setFillColor(Color.BLACK);
+
+        double quarter = (Math.sqrt(2)/2) * getRadius();
+        pointsX = new double[] {1+2,quarter+2,0,-quarter-2,-1-2,-quarter-2,0,quarter+2};
+        pointsY = new double[] {0,quarter+2,1+2,quarter+2,0,-quarter-2,-1-2,-quarter-2};
 
         if (left) {
             currentDX = -step;
@@ -32,19 +41,25 @@ public class Ball extends Ellipse {
     }
 
     public void checkCollision() {
-        GraphicsObject[] bounceables = new GraphicsObject[4];
+        GraphicsObject[] bounceables = new GraphicsObject[8];
 
-        bounceables[0] = game.getDeepElementAt(getX(), getY());
-        bounceables[1] = game.getDeepElementAt(getX(), getY() + size);
-        bounceables[2] = game.getDeepElementAt(getX() + size, getY());
-        bounceables[3] = game.getDeepElementAt(getX() + size, getY() + size);
+//        bounceables[0] = game.getDeepElementAt(getX(), getY());
+//        bounceables[1] = game.getDeepElementAt(getX(), getY() + size);
+//        bounceables[2] = game.getDeepElementAt(getX() + size, getY());
+//        bounceables[3] = game.getDeepElementAt(getX() + size, getY() + size);
+
+        for (int i=0; i<bounceables.length; i++) {
+            bounceables[i] = game.getDeepElementAt(getXMid()+pointsX[i], getYMid()+pointsY[i]);
+        }
 
         for (int i = 0; i < bounceables.length; i++) {
             if (bounceables[i] instanceof Bounceable) {
                 Bounceable bounced = (Bounceable) bounceables[i];
                 bounced.collided(this);
+                alreadyBounced = true;
             }
         }
+        alreadyBounced = false;
     }
 
     public void bounce(Direction direction) {
@@ -77,5 +92,9 @@ public class Ball extends Ellipse {
 
     public double getYMid() {
         return getY() + getRadius();
+    }
+
+    public boolean isAlreadyBounced() {
+        return alreadyBounced;
     }
 }

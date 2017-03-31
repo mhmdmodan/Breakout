@@ -7,15 +7,24 @@ import java.awt.*;
  */
 public class Brick extends Barrier {
     BrickWall wall;
+    int id;
 
-    public Brick(double x, double y, double width, double height, Color color, BrickWall wall) {
+    public Brick(double x, double y, double width, double height, Color color, int id, BrickWall wall) {
         super(x, y, width, height, color);
         this.wall = wall;
+        this.id = id;
     }
 
     @Override
     public void collided(Ball ball) {
         ball.bounce(Bounceable.collisionDirection(this, ball));
-        wall.remove(this);
+        if (!ball.isAlreadyBounced()) {
+            wall.deleteBrick(this);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return ""+id;
     }
 }
