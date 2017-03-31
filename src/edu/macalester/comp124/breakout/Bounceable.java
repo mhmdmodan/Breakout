@@ -42,7 +42,7 @@ public interface Bounceable {
                 xDist <= (bounceable.getWidth() / 2 + ball.getRadius())) {
             if (bounceable.getXMid() < ball.getXMid()) {
                 //these set position terms unclip the ball, so it can never get stuck inside something
-                //and jiggle around an edge
+                //and jiggle around an edge.
                 ball.setPosition(bounceable.getX() + bounceable.getWidth(), ball.getY());
                 return RIGHT;
             } else {
