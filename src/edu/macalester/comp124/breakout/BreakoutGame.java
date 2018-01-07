@@ -36,7 +36,7 @@ public class BreakoutGame extends CanvasWindow {
     public static final int INITIAL_DELAY = 3000;
 
     //Paddle parameters
-    public static final double PADDLE_WIDTH = 100;
+    public static final double PADDLE_WIDTH = 120;
     public static final double PADDLE_HEIGHT = 10;
     public static final double PADDLE_START_Y = 880;
     public static final double PADDLE_START_X = CANVAS_WIDTH/2 - PADDLE_WIDTH/2;
@@ -102,7 +102,7 @@ public class BreakoutGame extends CanvasWindow {
 
         livesText = new GraphicsText("LIVES: "+lives, 0, 0);
         livesText.setFont(new Font(FONT,Font.BOLD,40));
-        livesText.setPosition(CANVAS_WIDTH - livesText.getWidth()-20, livesText.getHeight());
+        livesText.setPosition(CANVAS_WIDTH - livesText.getWidth()-330, livesText.getHeight()-30);
         add(livesText);
 
         listener = new Listener(ball,paddle);

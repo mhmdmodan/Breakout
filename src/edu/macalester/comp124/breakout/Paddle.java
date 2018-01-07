@@ -11,6 +11,7 @@ import java.awt.event.MouseMotionListener;
 public class Paddle extends Barrier {
     private double halfWidth;
     private double paddleLimit;
+    private double currentDX;
 
     /**
      * Sets up the paddle
@@ -27,6 +28,11 @@ public class Paddle extends Barrier {
         halfWidth = getWidth()/2;
     }
 
+    @Override
+    public void collided(Ball ball) {
+        ball.bounce(Bounceable.collisionDirection(this, ball), currentDX);
+    }
+
     /**
      * Sets the center of the paddle at the given x value,
      * ensures the window limit is not exceeded
@@ -40,6 +46,14 @@ public class Paddle extends Barrier {
         } else {
             setPosition(x - getWidth()/2, getY());
         }
+    }
+
+    public double getCurrentDX() {
+        return currentDX;
+    }
+
+    public void setCurrentDX(double currentDX) {
+        this.currentDX = currentDX;
     }
 
     @Override

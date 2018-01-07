@@ -10,12 +10,14 @@ import java.awt.event.MouseMotionListener;
  */
 public class Listener implements MouseMotionListener, ActionListener {
 
-    Ball ball;
-    Paddle paddle;
+    private Ball ball;
+    private Paddle paddle;
+    private double lastX;
 
     public Listener(Ball ball, Paddle paddle) {
         this.ball = ball;
         this.paddle = paddle;
+        lastX = 450;
     }
 
     /**
@@ -25,6 +27,8 @@ public class Listener implements MouseMotionListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         ball.moveBall();
+        paddle.setCurrentDX(paddle.getX()-lastX);
+        lastX = paddle.getX();
         ball.checkCollision();
     }
 

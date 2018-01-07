@@ -5,6 +5,9 @@ import comp124graphics.GraphicsObject;
 
 import java.awt.*;
 
+import static edu.macalester.comp124.breakout.Direction.BOTTOM;
+import static edu.macalester.comp124.breakout.Direction.TOP;
+
 /**
  * A class defining a ball
  */
@@ -88,6 +91,15 @@ public class Ball extends Ellipse {
                 break;
             case TOP:
                 currentDY = currentDY < 0 ? currentDY : -currentDY;
+        }
+    }
+
+    public void bounce(Direction direction, double dx) {
+        bounce(direction);
+        if (direction == TOP || direction == BOTTOM) {
+            currentDX += Math.sqrt(Math.abs(dx)) * Math.signum(dx);
+            System.out.println(Math.sqrt(Math.abs(dx)) * Math.signum(dx));
+            currentDX = Math.abs(currentDX) > 8 ? 8 * Math.signum(dx) : currentDX;
         }
     }
 
